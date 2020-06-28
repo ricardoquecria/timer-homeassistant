@@ -1,8 +1,19 @@
-Teste
+# Timer para Home Assistant com Node-RED
 
-### Recursos usados
+## Recursos usados
 Button-card para exibir os botões com nomes personalizados
 https://github.com/custom-cards/button-card
+
+
+
+## Para criar esse timer vamos usar:
+### * input_boolean
+* input_number
+* input_select
+* sensor com template
+
+
+
 
 
 
