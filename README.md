@@ -17,7 +17,7 @@
 ## Configuração
 
 
-## Input Boolean:
+## 1ª Etapa - Input Boolean:
 
 Começamos com o input que será usado para ativar a sequencia da programação do timer; 
 ```
@@ -54,7 +54,7 @@ Resultado:
 
 
 
-## Input Number:
+## 2ª Etapa - Input Number:
 Vamos criar um input_number que será usado para definir os minutos do timer.<br>
 Você pode escolher um input com slider (como no gif).
 ```
@@ -85,7 +85,7 @@ Resultado:
 * input_number.timer_minutos
 
 
-## Input Select:
+## 3ª Etapa - Input Select:
 
 O input_select será usado para criar a lista de seleção com os dispositivos na interface do timer.<br>
 Acrescente as oções de acordo com sua necessidade.<br>
@@ -103,7 +103,7 @@ input_select:
 Resultado:
 * input_select.timer_lista
 
-## Sensor
+## 4ª Etapa - Sensor
 
 Vamos criar sensores com templates para calcular e exibir o tempo que ainda falta para o dispositivo ser desligado.<br>
 ATENÇÃO! Se ao criar mais sensores para os seus dispositivos, altere também o template do calculo. Por isso que é importante manter um padrão "timer_nome_do_dispositivo". Observe que o "value_template" faz referência ao próprio sensor e ao input_boolean do dispositivo em questão. Compare os dois exemplos abaixo.
@@ -136,13 +136,13 @@ Resultado:
 * sensor.timer_tv_quarto
 * sensor.timer_lampadas
 
-
-## Node-RED
+## 5ª Etapa - Verifique as configurações e reinicie o Home Assistant
+## 6ª Etapa - Node-RED
 O fluxo do Node-RED deve ser importado e depois editado de acordo com sua necessidade.<br>
 Para fazer a importação você pode baixar o arquivo .json ou copiar o código e colar na janela de importação do Node-RED.<br>
 [Clique aqui para copiar ou fazer download do código dos fluxos do Node-RED](https://github.com/orickcorreia/timer-homeassistant/blob/master/nodered_timer.json)
 
-## Aplicando na interface (Lovelace)
+## 7ª Etapa - Aplicando na interface (Lovelace)
 
 ```
 - type: vertical-stack
