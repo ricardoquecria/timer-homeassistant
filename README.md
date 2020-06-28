@@ -47,7 +47,7 @@ Faça um input_boolean para cada dispositivo que desejar adicionar na lista do t
 
 ## Input Number:
 Vamos criar um input_number que será usado para definir os minutos do timer.<br>
-Você pode escolher entre um input com slider (como no gif).
+Você pode escolher um input com slider (como no gif).
 ```
 input_number:
 
@@ -71,4 +71,20 @@ input_number:
     max: 180
     step: 5
     mode: box
+```
+
+## Input Select:
+
+O input_select será usado para criar a lista de seleção com os dispositivos na interface do timer.<br>
+Acrescente as oções de acordo com sua necessidade.<br>
+ATENÇÃO! Só acrescente opcões que tiverem input_booleans criados.
+```
+input_select:
+
+  timer:
+    name: 'Timer - Dispositivos'
+    icon: mdi:devices
+    options: #Só acrescente as opções que tiverem input_boolean
+      - TV do Quarto
+      - Lampadas
 ```
