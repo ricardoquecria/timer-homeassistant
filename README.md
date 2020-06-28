@@ -139,8 +139,125 @@ Resultado:
 
 ## Node-RED
 O fluxo do Node-RED deve ser importado e depois editado de acordo com sua necessidade.<br>
-Para fazer a importação você pode baixar o arquivo .json ou copiar o código e colar na janela de importação do Node-RED.
+Para fazer a importação você pode baixar o arquivo .json ou copiar o código e colar na janela de importação do Node-RED.<br>
 [Clique aqui para copiar ou fazer download do código dos fluxos do Node-RED](https://github.com/orickcorreia/timer-homeassistant/blob/master/nodered_timer.json)
+
+## Aplicando na interface (Lovelace)
+
+```
+- type: vertical-stack
+  cards:
+
+  # Título Cabeçalho
+  - type: 'custom:button-card'
+    layout: icon_name
+    name: Timer
+    icon: mdi:timer
+    styles:
+      grid:
+        - grid-template-areas: '"n i"'
+        - grid-template-columns: 1fr 20% 
+      icon:
+        - align-self: end
+        - color: var(--text-primary-color)
+        - height: 35px
+      card:
+        - padding: 5px
+        - height: 45px
+        - background: var(--primary-color)
+      name:
+        - color: var(--text-primary-color)
+        - justify-self: start
+        - padding-left: 10%
+        - font-weight: 400
+        - font-size: 20px
+
+  # Painel Timer
+  - type: entities
+    show_header_toggle: false
+    entities:
+      - entity: input_select.timer_lista
+        name: Dispositivo
+      - entity: input_number.timer_minutos
+        name: Tempo
+      - entity: input_boolean.timer
+        name: Ativar
+        
+  #Condicional para exibir apenas quando o timer estiver ativo as Lampadas
+  - type: conditional
+    conditions:
+      - entity: input_boolean.timer_lampadas
+        state: "on"
+    card:
+      entity: input_boolean.timer_lampadas
+      type: "custom:button-card"
+      layout: icon_name
+      tap_action:
+        action: toggle
+      label: >
+        [[[
+          return 'Desligando em ' + (states['sensor.timer_lampadas'].state) + ' min' ; ;
+        ]]]
+      show_label: true
+      styles:
+        grid:
+          - grid-template-areas: '"i n l"'
+          - grid-template-columns: 15% 35% 50%  
+        icon:
+          - align-self: start
+          - color: var(--primary-color)
+          - height: 40px
+        card:
+          - padding: 5px
+          - height: 45px
+        name:
+          - justify-self: start
+          - font-weight: 400
+          - font-size: 14px
+        label:
+          - justify-self: end
+          - font-weight: 400
+          - font-size: 14px
+          - padding-right: 10%
+
+  #Condicional para exibir apenas quando o timer estiver ativo as TV do Quarto
+  - type: conditional
+    conditions:
+      - entity: input_boolean.timer_tv_quarto
+        state: "on"
+    card:
+      entity: input_boolean.timer_tv_quarto
+      type: "custom:button-card"
+      layout: icon_name
+      tap_action:
+        action: toggle
+      label: >
+        [[[
+          return 'Desligando em ' + (states['sensor.timer_tv_quarto'].state) + ' min' ; ;
+        ]]]
+      show_label: true
+      styles:
+        grid:
+          - grid-template-areas: '"i n l"'
+          - grid-template-columns: 15% 35% 50%  
+        icon:
+          - align-self: start
+          - color: var(--primary-color)
+          - height: 40px
+        card:
+          - padding: 5px
+          - height: 45px
+        name:
+          - justify-self: start
+          - font-weight: 400
+          - font-size: 14px
+        label:
+          - justify-self: end
+          - font-weight: 400
+          - font-size: 14px
+          - padding-right: 10%
+```
+
 
 
 
