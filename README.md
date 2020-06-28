@@ -304,6 +304,19 @@ No Node-RED você vai encontrar uma sequencia (flow) de programação para cada 
 
 * <b>12º turn_off Boolean -></b> Após concluir o timer, o input_boolean.timer_lampadas tem seu estado atualizado para "off", sumindo assim da interface lovelace.
 
+## Como funciona os sensores?
+
+Os sensores são usados para receber o tempo programado em minutos e calcular a contagem regressiva para o desligamento.
+
+* <b>1º -></b> O atributo "timer" recebe o tempo coletado pelo input_number.timer_minutos;
+* <b>2º -></b> O template verifica se o sensor.time é diferente de 0. Isso força o template a atualizar o valor toda vez que o sensor.time mudar de minuto (o sensor timer é apenas um relógio);
+* <b>3º -></b> Em seguida o valor do atributo "timer" é multiplicado por 60 para ser convertido em segundos;
+* <b>4º -></b> Coleta o valor do atributo "last_changed" do input_boolean para verificar quando foi que o input foi ativado e divide por 60 para tambem converter em segundos; 
+* <b>5º -></b> Subtrai o tempo que o input_boolean foi ativado do tempo atribuido pelo timer e com isso temos uma contagem regressiva;
+
+
+
+
 
 ## Duvidas? 
 [ricardo@caulecriativo.com](mailto:ricardo@caulecriativo.com)
