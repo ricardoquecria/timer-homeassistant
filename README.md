@@ -1,6 +1,7 @@
 Teste
 
 ### Recursos usados
+Button-card para exibir os botões com nomes personalizados
 https://github.com/custom-cards/button-card
 
 
