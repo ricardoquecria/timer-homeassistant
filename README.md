@@ -1,4 +1,6 @@
 # Timer para Home Assistant com Node-RED
+![](timer.gif)
+
 
 ## Recursos usados:
 * Button-card para exibir os botões com nomes personalizados https://github.com/custom-cards/button-card
@@ -258,7 +260,8 @@ Para fazer a importação você pode baixar o arquivo .json ou copiar o código 
           - padding-right: 10%
 ```
 
-
+## Duvidas? 
+[ricardo@caulecriativo.com](mailto:ricardo@caulecriativo.com)
 
 
 
