@@ -14,6 +14,9 @@
 * input_select
 * sensor
 
+## Configuração
+
+
 ## Input Boolean:
 
 Começamos com o input que será usado para ativar a sequencia da programação do timer; 
@@ -21,7 +24,7 @@ Começamos com o input que será usado para ativar a sequencia da programação 
 input_boolean:
 
   #Input para ativar o timer 
-  timer_ativar:
+  timer:
     name: Timer
     initial: off
     icon: mdi:progress-check
@@ -44,6 +47,12 @@ Faça um input_boolean para cada dispositivo que desejar adicionar na lista do t
     initial: off
     icon: mdi:lightbulb-group-outline
 ```
+Resultado:
+* input_boolean.timer
+* input_boolean.timer_tv_quarto
+* input_boolean.timer_lampadas
+
+
 
 ## Input Number:
 Vamos criar um input_number que será usado para definir os minutos do timer.<br>
@@ -88,3 +97,34 @@ input_select:
       - TV do Quarto
       - Lampadas
 ```
+## Sensor
+
+Vamos criar sensores com templates para calcular e exibir o tempo que ainda falta para o dispositivo ser desligado.<br>
+ATENÇÃO! Se ao criar mais sensores para os seus dispositivos, altere também o template do calculo. Por isso que é importante manter um padrão "timer_nome_do_dispositivo". Observe que o "value_template" faz referência ao próprio sensor e ao input_boolean do dispositivo em questão. Compare os dois exemplos abaixo.
+```
+sensor:
+  - platform: template
+    sensors:
+
+      timer_tv_quarto:
+        friendly_name: 'Timer - TV do Quarto'
+        unit_of_measurement: min
+        value_template: "{% if (states.sensor.time.state) | float == 0 %}
+        {{ ((((state_attr('sensor.timer_tv_quarto', 'timer') | float()) * 60) - (as_timestamp(now()) -      as_timestamp(states.input_boolean.timer_tv_quarto.last_changed))) / 60) | round(0) }}
+        {% endif %}"
+        attribute_templates:
+          timer: >-
+            {{ state_attr('sensor.timer_tv_quarto', 'timer')}}
+
+      timer_lampadas:
+        friendly_name: 'Timer - Lampadas'
+        unit_of_measurement: min
+        value_template: "{% if (states.sensor.time.state) | float == 0 %}
+        {{ ((((state_attr('sensor.timer_lampadas', 'timer') | float()) * 60) - (as_timestamp(now()) - as_timestamp(states.input_boolean.timer_lampadas.last_changed))) / 60) | round(0) }}
+        {% endif %}"
+        attribute_templates:
+          timer: >-
+            {{ state_attr('sensor.timer_lampadas', 'timer')}}
+
+
+
