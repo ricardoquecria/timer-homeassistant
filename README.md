@@ -8,8 +8,8 @@ https://github.com/custom-cards/button-card
 
 ## Para criar esse timer vamos usar:
 #### * input_boolean
-> 1 input_boolean para iniciar a programação do timer
-> 1 input_boolean para cada dispositivo que você deseja acrescentar na lista do timer
+>* 1 input_boolean para iniciar a programação do timer
+>* 1 input_boolean para cada dispositivo que você deseja acrescentar na lista do timer
 #### * input_number
 #### * input_select
 #### * sensor com template
