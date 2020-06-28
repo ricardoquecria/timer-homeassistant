@@ -14,7 +14,8 @@
 * input_boolean
 * input_number
 * input_select
-* sensor
+* sensor template
+* sensor time_date
 
 ## Configuração
 
@@ -105,7 +106,7 @@ input_select:
 Resultado:
 * input_select.timer_lista
 
-## 4ª Etapa - Sensor
+## 4ª Etapa - Sensor template
 
 Vamos criar sensores com templates para calcular e exibir o tempo que ainda falta para o dispositivo ser desligado.<br>
 ATENÇÃO! Se ao criar mais sensores para os seus dispositivos, altere também o template do calculo. Por isso que é importante manter um padrão "timer_nome_do_dispositivo". Observe que o "value_template" faz referência ao próprio sensor e ao input_boolean do dispositivo em questão. Compare os dois exemplos abaixo.
@@ -138,13 +139,27 @@ Resultado:
 * sensor.timer_tv_quarto
 * sensor.timer_lampadas
 
-## 5ª Etapa - Verifique as configurações e reinicie o Home Assistant
-## 6ª Etapa - Node-RED
+
+## 5ª Etapa - Sensor time_date
+
+Este é um sensor que gera o horário atual. Ele é usado na programação do sensores acima para forçar a atualização da contagem regressiva.
+```
+sensor:
+  - platform: time_date
+    display_options:
+      - 'time'
+```
+Resultado:
+* sensor.time
+
+
+## 6ª Etapa - Verifique as configurações e reinicie o Home Assistant
+## 7ª Etapa - Node-RED
 O fluxo do Node-RED deve ser importado e depois editado de acordo com sua necessidade.<br>
 Para fazer a importação você pode baixar o arquivo .json ou copiar o código e colar na janela de importação do Node-RED.<br>
 [Clique aqui para copiar ou fazer download do código dos fluxos do Node-RED](https://github.com/orickcorreia/timer-homeassistant/blob/master/nodered_timer.json)
 
-## 7ª Etapa - Aplicando na interface (Lovelace)
+## 8ª Etapa - Aplicando na interface (Lovelace)
 
 ```
 - type: vertical-stack
@@ -259,6 +274,36 @@ Para fazer a importação você pode baixar o arquivo .json ou copiar o código 
           - font-size: 14px
           - padding-right: 10%
 ```
+
+## Como funciona o fluxo?
+
+No Node-RED você vai encontrar uma sequencia (flow) de programação para cada dispositivo. Essas sequência são idênticas. O que muda é apenas as entidades envolvidas. Os Nodes estão com comentários que explica a função e o que deve ser alterado. Importe para o seu Node-RED e leia os comentários.
+
+
+* <b>1º Start Timer -></b> Detecta quando o timer é ativado, verificando se o intut_boolean.timer_ativar está com status "on" e dispara o fluxo para todas as sequências;
+
+* <b>2º Lampadas -></b> Cada sequência começa com um node que verifica se o Nome selecionado no input_select.timer_lista é o mesmo do fluxo em questão. Se for "Lampadas", por exemplo, então o Node-RED vai seguir o fluxo programado com as entidades referentes as lampadas: sensor.timer_lampadas e input_boolean.timer_lampadas;
+
+* <b>3º Set Delay -></b> Extrai o valor do input_number.timer_minutos e converte em milisegundos para ser usado para definir o tempo do delay mais a frente;
+
+* <b>4º get var Timer -></b> Extrai o valor do input_number.timer_minutos novamente, mas agora para ser usado no sensor para fazer a contagem regressiva;
+
+* <b>5º Set Sensor -></b> O valor em minutos é inserido no sensor.timer_lampadas para ser usado na contagem regressiva;
+
+* <b>6º Delay 500ms -></b> Delay para dar tempo para que Home Assistant faça inserção dos minutos no sensor e para a experiência do usuário de perceber que o timer está sendo ativado;
+
+* <b>7º turn_on Boolean -></b> O input_boolean.timer_lampadas é ativado para que seja exibido na inferface lovelace e para que possa ser desativado, se necessário;
+
+* <b>8º Reset Botão Ativar -></b> O input_boolean.timer_ativar volta ao seu estado original "off", para ficar pronto para a próxima ativação; 
+
+* <b>9º variable -></b> Esse é o delay que vai receber o tempo que foi coletado pelo node "Set Delay";
+
+* <b>10º Check -></b> Ao terminar a contagem do delay, o node "Check" faz uma verificação se o input_boolean.timer_lampadas ainda está ativo. É nesse ponto que o fluxo vai checar se você deixou o timer seguir ou cancelou o timer;
+
+* <b>11º turn_off Device -></b> Se o timer ainda estiver ativo, então esse node vai fazer o desligamento do dispositivo. Por exemplo: group.lampadas. Esse timer pode ser usado para qualquer call-service ao final da programação. Pode ser usado para programar o timer para ligar, por exemplo;
+
+* <b>12º turn_off Boolean -></b> Após concluir o timer, o input_boolean.timer_lampadas tem seu estado atualizado para "off", sumindo assim da interface lovelace.
+
 
 ## Duvidas? 
 [ricardo@caulecriativo.com](mailto:ricardo@caulecriativo.com)
