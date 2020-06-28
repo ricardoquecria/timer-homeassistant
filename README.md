@@ -314,8 +314,7 @@ Os sensores são usados para receber o tempo programado em minutos e calcular a 
 * <b>4º -></b> Coleta o valor do atributo "last_changed" do input_boolean para verificar quando foi que o input foi ativado e divide por 60 para tambem converter em segundos; 
 * <b>5º -></b> Subtrai o tempo que o input_boolean foi ativado do tempo atribuido pelo timer e com isso temos uma contagem regressiva;
 
-
-
+É por isso que se faz necessário um sensor e um input_boolean para cada dispositivo que deseja adicionar ao timer.
 
 
 ## Duvidas? 
