@@ -20,27 +20,13 @@
 
 
 
-
+Começamos com o input que será usado para ativar a sequencia da programação do timer. 
 ```
 input_boolean:
 
-  #Input que será usado para ativar a sequencia da programação do timer. 
+  #Input para ativar o timer 
   timer_ativar:
     name: Timer
     initial: off
     icon: mdi:progress-check
-
-  #Inputs que serão usados para marcar quando um dispositivo está com timer agendado ou não. 
-  #Fazer um input_boolean para cada dispositivo que quiser adicionar na lista do timer.
-  #Sugiro seguir essa formatação para facilitar a configuração "timer_nome_do_dispositivo"
-  #Sugiro manter um padrão na formatação do nome, pois é esse nome que será exibido quando o timer estiver ativo.
-  timer_tv_quarto: 
-    name: Timer - TV do Quarto 
-    initial: off
-    icon: mdi:television
-
-  timer_lampadas:
-    name: Timer - Lampadas
-    initial: off
-    icon: mdi:lightbulb-group-outline
 ```
