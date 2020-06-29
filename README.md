@@ -319,7 +319,7 @@ That's why a sensor and an input_boolean are required for each device you want t
 
 
 ## Issue?
-[ricardo@caulecriativo.com] (mailto:ricardo@caulecriativo.com)
+[ricardo@caulecriativo.com](mailto:ricardo@caulecriativo.com)
 
 
 
