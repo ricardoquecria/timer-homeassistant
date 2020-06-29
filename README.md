@@ -15,7 +15,7 @@
 * input_number
 * input_select
 * sensor template
-* time_date sensor
+* sensor time_date 
 
 ## Configuration
 
@@ -30,7 +30,7 @@ input_boolean:
   timer_activate:
     name: Timer
     initial: off
-    icon: mdi: progress-check
+    icon: mdi:progress-check
 ```
 
 Then we add the inputs for each device. <br>
@@ -40,20 +40,20 @@ Make an input_boolean for each device you want to add to the timer list.
   #Maintain this formatting for easy "timer_name_do_device" configuration
   #Keep a pattern in the name formatting, as it is this name that will be displayed when the timer is active.
   
-  timer_tv_room:
-    name: Timer - Room TV
+  timer_tv:
+    name: Timer - TV
     initial: off
-    icon: mdi: television
+    icon: mdi:television
 
-  timer_lampadas:
-    name: Timer - Lamps
+  timer_lights:
+    name: Timer - Lights
     initial: off
-    icon: mdi: lightbulb-group-outline
+    icon: mdi:lightbulb-group-outline
 ```
 Result:
-* input_boolean.timer_ativar
-* input_boolean.timer_tv_quarto
-* input_boolean.timer_lampadas
+* input_boolean.timer_activate
+* input_boolean.timer_tv
+* input_boolean.timer_lights
 
 
 
@@ -64,7 +64,7 @@ You can choose a slider input (as in the gif).
 input_number:
 
   timer_minutes:
-    icon: mdi: timer
+    icon: mdi:timer
     name: Timer
     initial: 5
     min: 5
@@ -76,7 +76,7 @@ Or you can choose a boxed input to enter the value:
 input_number:
 
   timer_minutes:
-    icon: mdi: timer
+    icon: mdi:timer
     name: Timer
     initial: 5
     min: 5
@@ -96,48 +96,48 @@ ATTENTION! Only add options that have input_booleans created.
 ```
 input_select:
 
-  timer_lista:
+  timer_list:
     name: 'Timer - Devices'
-    icon: mdi: devices
+    icon: mdi:devices
     options: # Only add options that have input_boolean
-      - Bedroom TV
-      - Lamps
+      - TV
+      - Lights
 ```
 Result:
-* input_select.timer_lista
+* input_select.timer_list
 
 ## 4th Step - Sensor template
 
 We are going to create sensors with templates to calculate and display the time remaining for the device to be turned off.
-ATTENTION! When creating more sensors for your devices, also change the calculation template. That is why it is important to maintain a "timer_name_do_device" pattern. Note that the "value_template" refers to the sensor itself and the input_boolean of the device in question. Compare the two examples below.
+ATTENTION! When creating more sensors for your devices, also change the calculation template. That is why it is important to maintain a "timer_device_name" pattern. Note that the "value_template" refers to the sensor itself and the input_boolean of the device in question. Compare the two examples below.
 ```
 sensor:
   - platform: template
     sensors:
 
-      timer_tv_room:
-        friendly_name: 'Timer - Bedroom TV'
+      timer_tv:
+        friendly_name: 'Timer - TV Room'
         unit_of_measurement: min
         value_template: "{% if (states.sensor.time.state) | float == 0%}
-        {{(((((state_attr ('sensor.timer_tv_quarto', 'timer') '| float ()) * 60) - (as_timestamp (now ()) - as_timestamp (states.input_boolean.timer_tv_quarto.last_changed)) / 60) | round (0)}}
+        {{(((((state_attr ('sensor.timer_tv', 'timer') '| float ()) * 60) - (as_timestamp (now ()) - as_timestamp      (states.input_boolean.timer_tv.last_changed)) / 60) | round (0)}}
         {% endif%} "
         attribute_templates:
           timer:> -
-            {{state_attr ('sensor.timer_tv_quarto', 'timer')}}
+            {{state_attr ('sensor.timer_tv', 'timer')}}
 
-      timer_lampadas:
+      timer_lights:
         friendly_name: 'Timer - Lamps'
         unit_of_measurement: min
         value_template: "{% if (states.sensor.time.state) | float == 0%}
-        {{(((((state_attr ('sensor.timer_lampadas',' timer ')' float ()) * 60) - (as_timestamp (now ()) - as_timestamp (states.input_boolean.timer_lampadas.last_changed))) / 60) | round (0)}}
+        {{(((((state_attr ('sensor.timer_lights',' timer ')' float ()) * 60) - (as_timestamp (now ()) - as_timestamp (states.input_boolean.timer_lights.last_changed))) / 60) | round (0)}}
         {% endif%} "
         attribute_templates:
           timer:> -
-            {{state_attr ('sensor.timer_lampadas', 'timer')}}
+            {{state_attr ('sensor.timer_lights', 'timer')}}
 ```
 Result:
-* sensor.timer_tv_quarto
-* sensor.timer_lampadas
+* sensor.timer_tv
+* sensor.timer_lights
 
 
 ## 5th Stage - Time_date sensor
@@ -169,7 +169,7 @@ To import, you can download the .json file or copy the code and paste it into th
   - type: 'custom: button-card'
     layout: icon_name
     name: Timer
-    icon: mdi: timer
+    icon: mdi:timer
     styles:
       grid:
         - grid-template-areas: '"n i"'
@@ -193,36 +193,36 @@ To import, you can download the .json file or copy the code and paste it into th
   - type: entities
     show_header_toggle: false
     entities:
-      - entity: input_select.timer_lista
-        name: Device
+      - entity: input_select.timer_list
+        name: Devices
       - entity: input_number.timer_minutes
-        name: Weather
-      - entity: input_boolean.timer
-        name: Enable
+        name: Timer
+      - entity: input_boolean.timer_activate
+        name: Activate
         
-  #Conditional to display only when the timer is on the Lamps
+  #Conditional for display only when the lights timer is active
   - type: conditional
     conditions:
-      - entity: input_boolean.timer_lampadas
+      - entity: input_boolean.timer_lights
         state: "on"
     card:
-      entity: input_boolean.timer_lampadas
-      type: "custom: button-card"
+      entity: input_boolean.timer_lights
+      type: "custom:button-card"
       layout: icon_name
       tap_action:
         action: toggle
-      label:>
+      label: >
         [[[
-          return 'Shutting down at' + (states ['sensor.timer_lampadas']. state) + 'min'; ;
+          return 'Turning off in ' + (states['sensor.timer_lights'].state) + ' min' ; ;
         ]]]
       show_label: true
       styles:
         grid:
           - grid-template-areas: '"i n l"'
-          - grid-template-columns: 15% 35% 50%
+          - grid-template-columns: 15% 35% 50%  
         icon:
           - align-self: start
-          - color: var (- primary-color)
+          - color: var(--primary-color)
           - height: 40px
         card:
           - padding: 5px
@@ -237,29 +237,29 @@ To import, you can download the .json file or copy the code and paste it into th
           - font-size: 14px
           - padding-right: 10%
 
-  #Conditional to display only when the timer is active on the Bedroom TVs
+  #Conditional for display only when TV timer is active
   - type: conditional
     conditions:
-      - entity: input_boolean.timer_tv_quarto
+      - entity: input_boolean.timer_tv
         state: "on"
     card:
-      entity: input_boolean.timer_tv_quarto
-      type: "custom: button-card"
+      entity: input_boolean.timer_tv
+      type: "custom:button-card"
       layout: icon_name
       tap_action:
         action: toggle
-      label:>
+      label: >
         [[[
-          return 'Shutting down at' + (states ['sensor.timer_tv_quarto']. state) + 'min'; ;
+          return 'Turning off in ' + (states['sensor.timer_tv'].state) + ' min' ; ;
         ]]]
       show_label: true
       styles:
         grid:
           - grid-template-areas: '"i n l"'
-          - grid-template-columns: 15% 35% 50%
+          - grid-template-columns: 15% 35% 50%  
         icon:
           - align-self: start
-          - color: var (- primary-color)
+          - color: var(--primary-color)
           - height: 40px
         card:
           - padding: 5px
@@ -280,35 +280,35 @@ To import, you can download the .json file or copy the code and paste it into th
 In Node-RED you will find a programming flow for each device. These strings are identical. What changes is only the entities involved. Nodes have comments that explain the function and what should be changed. Import to your Node-RED and read the comments.
 
 
-* <b> 1º Start Timer -> </b> Detects when the timer is activated, checking if intut_boolean.timer_ativar is in "on" status and triggers the flow for all sequences;
+* <b> 1º Start Timer -> </b> Detects when the timer is activated, checking if intut_boolean.timer_activate is in "on" status and triggers the flow for all sequences;
 
-* <b> 2º Lampadas -> </b> Each sequence starts with a node that checks if the Name selected in the input_select.timer_lista is the same as the flow in question. If it is "Lampadas", for example, then Node-RED will follow the flow programmed with the entities related to the lamps: sensor.timer_lampadas and input_boolean.timer_lampadas;
+* <b> 2º Lampadas -> </b> Each sequence starts with a node that checks if the Name selected in the input_select.timer_list is the same as the flow in question. If it is "Lampadas", for example, then Node-RED will follow the flow programmed with the entities related to the lamps: sensor.timer_lights and input_boolean.timer_lights;
 
-* <b> 3rd Set Delay -> </b> Extracts the value of the input_number.timer_minutos and converts it to milliseconds to be used to define the delay time later on;
+* <b> 3rd Set Delay -> </b> Extracts the value of the input_number.timer_minutes and converts it to milliseconds to be used to define the delay time later on;
 
-* <b> 4º get var Timer -> </b> Extracts the value of the input_number.timer_minutos again, but now to be used in the sensor to count down;
+* <b> 4º get var Timer -> </b> Extracts the value of the input_number.timer_minutes again, but now to be used in the sensor to count down;
 
-* <b> 5th Set Sensor -> </b> The value in minutes is inserted in the sensor.timer_lampadas to be used in the countdown;
+* <b> 5th Set Sensor -> </b> The value in minutes is inserted in the sensor.timer_lights to be used in the countdown;
 
 * <b> 6th Delay 500ms -> </b> Delay to allow time for the Home Assistant to insert the minutes in the sensor and for the user's experience of realizing that the timer is being activated;
 
-* <b> 7th turn_on Boolean -> </b> The input_boolean.timer_lampadas is activated so that it is displayed on the lovelace interface and can be deactivated, if necessary;
+* <b> 7th turn_on Boolean -> </b> The input_boolean.timer_lights is activated so that it is displayed on the lovelace interface and can be deactivated, if necessary;
 
-* <b> 8th Reset Activate Button -> </b> The input_boolean.timer_ativar returns to its original "off" state, to be ready for the next activation;
+* <b> 8th Reset Activate Button -> </b> The input_boolean.timer_activate returns to its original "off" state, to be ready for the next activation;
 
 * <b> 9º variable -> </b> This is the delay that will receive the time that was collected by the node "Set Delay";
 
-* <b> 10th Check -> </b> When the delay count is finished, the "Check" node checks whether the input_boolean.timer_lampadas is still active. This is where the fl
+* <b> 10th Check -> </b> When the delay count is finished, the "Check" node checks whether the input_boolean.timer_lights is still active. This is where the fl
 
-* <b> 11th turn_off Device -> </b> If the timer is still active, then this node will shutdown the device. For example: group.lampadas. This timer can be used for any call service at the end of the schedule. It can be used to program the timer to start, for example;
+* <b> 11th turn_off Device -> </b> If the timer is still active, then this node will shutdown the device. For example: "group.lights". This timer can be used for any call service at the end of the schedule. It can be used to program the timer to start, for example;
 
-* <b> 12th turn_off Boolean -> </b> After completing the timer, input_boolean.timer_lampadas has its status updated to "off", thus disappearing from the lovelace interface.
+* <b> 12th turn_off Boolean -> </b> After completing the timer, input_boolean.timer_lights has its status updated to "off", thus disappearing from the lovelace interface.
 
 ## How do the sensors work?
 
 The sensors are used to receive the programmed time in minutes and calculate the countdown to shutdown.
 
-* <b> 1º -> </b> The "timer" attribute receives the time collected by the input_number.timer_minutos;
+* <b> 1º -> </b> The "timer" attribute receives the time collected by the input_number.timer_minutes;
 * <b> 2nd -> </b> The template checks whether sensor.time is different from 0. This forces the template to update the value every time sensor.time changes the minute (the timer sensor is just a clock );
 * <b> 3rd -> </b> Then the value of the "timer" attribute is multiplied by 60 to be converted into seconds;
 * <b> 4th -> </b> Collect the value of the "last_changed" attribute of the input_boolean to check when the input was activated and divide it by 60 to also convert in seconds;
@@ -318,7 +318,7 @@ That's why a sensor and an input_boolean are required for each device you want t
 
 
 ## Issue?
-[ricardo@caulecriativo.com] (mailto: ricardo@caulecriativo.com)
+[ricardo@caulecriativo.com] (mailto:ricardo@caulecriativo.com)
 
 
 
