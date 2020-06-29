@@ -1,5 +1,5 @@
 # Timer for Home Assistant with Node-RED
-! [] (timer.gif)
+![](timer.gif)
 
 
 ## Resources used:
@@ -23,7 +23,7 @@
 ## 1st Step - Input Boolean:
 
 We start with the input that will be used to activate the timer programming sequence;
-``
+```
 input_boolean:
 
   #Input to activate the timer
@@ -31,12 +31,12 @@ input_boolean:
     name: Timer
     initial: off
     icon: mdi: progress-check
-``
+```
 
 Then we add the inputs for each device. <br>
 These inputs will be used as buttons that signal when a timer is activated and to cancel a timer when clicking. <br>
 Make an input_boolean for each device you want to add to the timer list.
-``
+```
   #Maintain this formatting for easy "timer_name_do_device" configuration
   #Keep a pattern in the name formatting, as it is this name that will be displayed when the timer is active.
   
@@ -49,7 +49,7 @@ Make an input_boolean for each device you want to add to the timer list.
     name: Timer - Lamps
     initial: off
     icon: mdi: lightbulb-group-outline
-``
+```
 Result:
 * input_boolean.timer_ativar
 * input_boolean.timer_tv_quarto
@@ -60,7 +60,7 @@ Result:
 ## 2nd Step - Input Number:
 Let's create an input_number that will be used to define the timer minutes.
 You can choose a slider input (as in the gif).
-``
+```
 input_number:
 
   timer_minutes:
@@ -70,9 +70,9 @@ input_number:
     min: 5
     max: 180
     step: 5
-``
+```
 Or you can choose a boxed input to enter the value:
-``
+```
 input_number:
 
   timer_minutes:
@@ -83,7 +83,7 @@ input_number:
     max: 180
     step: 5
     mode: box
-``
+```
 Result:
 * input_number.timer_minutes
 
@@ -93,7 +93,7 @@ Result:
 The input_select will be used to create the selection list with the devices on the timer interface.
 Add the options according to your needs. <br>
 ATTENTION! Only add options that have input_booleans created.
-``
+```
 input_select:
 
   timer_lista:
@@ -102,7 +102,7 @@ input_select:
     options: # Only add options that have input_boolean
       - Bedroom TV
       - Lamps
-``
+```
 Result:
 * input_select.timer_lista
 
@@ -110,7 +110,7 @@ Result:
 
 We are going to create sensors with templates to calculate and display the time remaining for the device to be turned off.
 ATTENTION! When creating more sensors for your devices, also change the calculation template. That is why it is important to maintain a "timer_name_do_device" pattern. Note that the "value_template" refers to the sensor itself and the input_boolean of the device in question. Compare the two examples below.
-``
+```
 sensor:
   - platform: template
     sensors:
@@ -134,7 +134,7 @@ sensor:
         attribute_templates:
           timer:> -
             {{state_attr ('sensor.timer_lampadas', 'timer')}}
-``
+```
 Result:
 * sensor.timer_tv_quarto
 * sensor.timer_lampadas
@@ -143,12 +143,12 @@ Result:
 ## 5th Stage - Time_date sensor
 
 This is a sensor that generates the current time. It is used in programming the sensors above to force the countdown to update.
-``
+```
 sensor:
   - platform: time_date
     display_options:
       - 'time'
-``
+```
 Result:
 * sensor.time
 
@@ -159,117 +159,9 @@ The Node-RED stream must be imported and then edited according to your needs. <b
 To import, you can download the .json file or copy the code and paste it into the Node-RED import window. <br>
 [Click here to copy or download the code for Node-RED flows] (https://github.com/orickcorreia/timer-homeassistant/blob/master/nodered_timer.json)
 
-## 8ª Etapa - Aplicando na interface (Lovelace)
-
-```
-- type: vertical-stack
-  cards:
-
-  # Título Cabeçalho
-  - type: 'custom:button-card'
-    layout: icon_name
-    name: Timer
-    icon: mdi:timer
-    styles:
-      grid:
-        - grid-template-areas: '"n i"'
-        - grid-template-columns: 1fr 20% 
-      icon:
-        - align-self: end
-        - color: var(--text-primary-color)
-        - height: 35px
-      card:
-        - padding: 5px
-        - height: 45px
-        - background: var(--primary-color)
-      name:
-        - color: var(--text-primary-color)
-        - justify-self: start
-        - padding-left: 10%
-        - font-weight: 400
-        - font-size: 20px
-
-  # Painel Timer
-  - type: entities
-    show_header_toggle: false
-    entities:
-      - entity: input_select.timer_lista
-        name: Dispositivo
-      - entity: input_number.timer_minutos
-        name: Tempo
-      - entity: input_boolean.timer
-        name: Ativar
-        
-  #Condicional para exibir apenas quando o timer estiver ativo as Lampadas
-  - type: conditional
-    conditions:
-      - entity: input_boolean.timer_lampadas
-        state: "on"
-    card:
-      entity: input_boolean.timer_lampadas
-      type: "custom:button-card"
-      layout: icon_name
-      tap_action:
-        action: toggle
-      label: >
-        [[[
-          return 'Desligando em ' + (states['sensor.timer_lampadas'].state) + ' min' ; ;
-        ]]]
-      show_label: true
-      styles:
-        grid:
-          - grid-template-areas: '"i n l"'
-          - grid-template-columns: 15% 35% 50%  
-        icon:
-          - align-self: start
-          - color: var(--primary-color)
-          - height: 40px
-        card:
-          - padding: 5px
-          - height: 45px
-        name:
-          - justify-self: start
-          - font-weight: 400
-          - font-size: 14px
-        label:
-          - justify-self: end
-          - font-weight: 400
-          - font-size: 14px
-          - padding-right: 10%
-
-  #Condicional para exibir apenas quando o timer estiver ativo as TV do Quarto
-  - type: conditional
-    conditions:
-      - entity: input_boolean.timer_tv_quarto
-        state: "on"
-    card:
-      entity: input_boolean.timer_tv_quarto
-      type: "custom:button-card"
-      layout: icon_name
-      tap_action:
-        action: toggle
-      label: >
-        [[[
-          return 'Desligando em ' + (states['sensor.timer_tv_quarto'].state) + ' min' ; ;
-        ]]]
-      show_label: true
-      styles:
-        grid:
-          - grid-template-areas: '"i n l"'
-          - grid-template-columns: 15% 35% 50%  
-        icon:
-          - align-self: start
-          - color: var(--primary-color)
-          - height: 40px
-        card:
-          - padding: 5px
-          - height: 45px
-        name:
-          - justify-self: start
-          - font-weight: 400
 ## 8th Step - Applying to the interface (Lovelace)
 
-``
+```
 - type: vertical-stack
   cards:
 
@@ -381,7 +273,7 @@ To import, you can download the .json file or copy the code and paste it into th
           - font-weight: 400
           - font-size: 14px
           - padding-right: 10%
-``
+```
 
 ## How does the flow work?
 
