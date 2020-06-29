@@ -116,7 +116,7 @@ sensor:
     sensors:
 
       timer_tv:
-        friendly_name: 'Timer - TV Room'
+        friendly_name: 'Timer - TV'
         unit_of_measurement: min
         value_template: "{% if (states.sensor.time.state) | float == 0%}
         {{(((((state_attr ('sensor.timer_tv', 'timer') '| float ()) * 60) - (as_timestamp (now ()) - as_timestamp      (states.input_boolean.timer_tv.last_changed)) / 60) | round (0)}}
@@ -282,7 +282,7 @@ In Node-RED you will find a programming flow for each device. These strings are 
 
 * <b> 1º Start Timer -> </b> Detects when the timer is activated, checking if intut_boolean.timer_activate is in "on" status and triggers the flow for all sequences;
 
-* <b> 2º Lampadas -> </b> Each sequence starts with a node that checks if the Name selected in the input_select.timer_list is the same as the flow in question. If it is "Lampadas", for example, then Node-RED will follow the flow programmed with the entities related to the lamps: sensor.timer_lights and input_boolean.timer_lights;
+* <b> 2º Lights -> </b> Each sequence starts with a node that checks if the Name selected in the input_select.timer_list is the same as the flow in question. If it is "Lights", for example, then Node-RED will follow the flow programmed with the entities related to the lamps: sensor.timer_lights and input_boolean.timer_lights;
 
 * <b> 3rd Set Delay -> </b> Extracts the value of the input_number.timer_minutes and converts it to milliseconds to be used to define the delay time later on;
 
