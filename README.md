@@ -157,7 +157,7 @@ Result:
 ## 7ª Stage - Node-RED
 The Node-RED stream must be imported and then edited according to your needs. <br>
 To import, you can download the .json file or copy the code and paste it into the Node-RED import window. <br>
-[Click here to copy or download the code for Node-RED flows](https://github.com/orickcorreia/timer-homeassistant/blob/master/nodered_timer_pt_br.json)
+[Click here to copy or download the code for Node-RED flows](https://github.com/orickcorreia/timer-homeassistant/blob/master/nodered_timer.json)
 
 ## 8th Step - Applying to the interface (Lovelace)
 
