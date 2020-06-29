@@ -1,6 +1,6 @@
 [
     {
-        "id": "d72a20bc.adcb",
+        "id": "5e026a39.f4ae64",
         "type": "server-state-changed",
         "z": "d342a46b.72a638",
         "name": "Start Timer",
@@ -26,90 +26,90 @@
         "halt_if_compare": "is",
         "outputs": 2,
         "output_only_on_state_change": true,
-        "x": 160,
-        "y": 360,
+        "x": 80,
+        "y": 400,
         "wires": [
             [
-                "6c6dd091.bf38b",
-                "f2d83b09.c3a488"
+                "d3fcb50.fccae48",
+                "be399d5c.b76da"
             ],
             []
         ]
     },
     {
-        "id": "6c6dd091.bf38b",
+        "id": "d3fcb50.fccae48",
         "type": "api-current-state",
         "z": "d342a46b.72a638",
-        "name": "Lights",
+        "name": "Lampadas",
         "server": "8c51b0bb.698c3",
         "version": 1,
         "outputs": 2,
-        "halt_if": "Lights",
+        "halt_if": "Lampadas",
         "halt_if_type": "str",
         "halt_if_compare": "is",
         "override_topic": false,
-        "entity_id": "input_select.timer_list",
+        "entity_id": "input_select.timer_lista",
         "state_type": "str",
         "state_location": "payload",
         "override_payload": "msg",
         "entity_location": "data",
         "override_data": "msg",
         "blockInputOverrides": false,
-        "x": 330,
-        "y": 340,
+        "x": 250,
+        "y": 380,
         "wires": [
             [
-                "3e581b0b.011514"
+                "34f3563d.c8da7a"
             ],
             []
         ]
     },
     {
-        "id": "3e581b0b.011514",
+        "id": "34f3563d.c8da7a",
         "type": "api-render-template",
         "z": "d342a46b.72a638",
         "name": "Set Delay",
         "server": "8c51b0bb.698c3",
-        "template": "{{( (states('input_number.timer_minutes') | float()) * 60000 ) | round()}}",
+        "template": "{{( (states('input_number.timer_minutos') | float()) * 60000 ) | round()}}",
         "resultsLocation": "delay",
         "resultsLocationType": "msg",
         "templateLocation": "delay",
         "templateLocationType": "msg",
-        "x": 500,
-        "y": 340,
+        "x": 420,
+        "y": 380,
         "wires": [
             [
-                "c51a1ca3.d4ca4"
+                "d962b823.4b7298"
             ]
         ]
     },
     {
-        "id": "84fb27ae.188f18",
+        "id": "b33aa916.391678",
         "type": "api-call-service",
         "z": "d342a46b.72a638",
-        "name": "Reset Activate Input",
+        "name": "Reset Botão Ativar",
         "server": "82136dea.a6d7a",
         "version": 1,
         "debugenabled": false,
         "service_domain": "input_boolean",
         "service": "turn_off",
-        "entityId": "input_boolean.timer_activate",
+        "entityId": "input_boolean.timer_ativar",
         "data": "",
         "dataType": "json",
         "mergecontext": "",
         "output_location": "",
         "output_location_type": "none",
         "mustacheAltTags": false,
-        "x": 1300,
-        "y": 340,
+        "x": 1210,
+        "y": 380,
         "wires": [
             [
-                "6d393170.b04f2"
+                "84bf864c.aa2258"
             ]
         ]
     },
     {
-        "id": "102d8356.0d977d",
+        "id": "7bca1ff8.8b7c1",
         "type": "ha-api",
         "z": "d342a46b.72a638",
         "name": "Set Sensor",
@@ -117,41 +117,41 @@
         "debugenabled": false,
         "protocol": "http",
         "method": "post",
-        "path": "/api/states/sensor.timer_lights",
-        "data": "{\"entityid\":\"sensor.timer_lights\",\"state\":0,\"attributes\":{\"timer\":\"{{payload}}\"}}",
+        "path": "/api/states/sensor.timer_lampadas",
+        "data": "{\"entityid\":\"sensor.timer_lampadas\",\"state\":0,\"attributes\":{\"timer\":\"{{payload}}\"}}",
         "dataType": "json",
         "location": "payload",
         "locationType": "msg",
         "responseType": "json",
-        "x": 810,
-        "y": 340,
+        "x": 730,
+        "y": 380,
         "wires": [
             [
-                "22daa63c.592a4a"
+                "14a04f31.18e7c1"
             ]
         ]
     },
     {
-        "id": "c51a1ca3.d4ca4",
+        "id": "d962b823.4b7298",
         "type": "api-render-template",
         "z": "d342a46b.72a638",
         "name": "get var Timer",
         "server": "8c51b0bb.698c3",
-        "template": "{{ states('input_number.timer_minutes') }}",
+        "template": "{{ states('input_number.timer_minutos') }}",
         "resultsLocation": "payload",
         "resultsLocationType": "msg",
         "templateLocation": "payload",
         "templateLocationType": "msg",
-        "x": 650,
-        "y": 340,
+        "x": 570,
+        "y": 380,
         "wires": [
             [
-                "102d8356.0d977d"
+                "7bca1ff8.8b7c1"
             ]
         ]
     },
     {
-        "id": "6d393170.b04f2",
+        "id": "84bf864c.aa2258",
         "type": "delay",
         "z": "d342a46b.72a638",
         "name": "",
@@ -165,16 +165,16 @@
         "randomLast": "5",
         "randomUnits": "seconds",
         "drop": true,
-        "x": 1480,
-        "y": 340,
+        "x": 1380,
+        "y": 380,
         "wires": [
             [
-                "a621bc49.870cc"
+                "e625c572.9c1d08"
             ]
         ]
     },
     {
-        "id": "71605fb3.14ec7",
+        "id": "5244d21f.e1409c",
         "type": "api-call-service",
         "z": "d342a46b.72a638",
         "name": "turn_off Boolean",
@@ -183,21 +183,21 @@
         "debugenabled": false,
         "service_domain": "input_boolean",
         "service": "turn_off",
-        "entityId": "input_boolean.timer_lights",
+        "entityId": "input_boolean.timer_lampadas",
         "data": "",
         "dataType": "json",
         "mergecontext": "",
         "output_location": "",
         "output_location_type": "none",
         "mustacheAltTags": false,
-        "x": 1950,
-        "y": 340,
+        "x": 1850,
+        "y": 380,
         "wires": [
             []
         ]
     },
     {
-        "id": "f3d735df.28d318",
+        "id": "d2019b8.a92cf68",
         "type": "api-call-service",
         "z": "d342a46b.72a638",
         "name": "turn_off Device",
@@ -213,16 +213,16 @@
         "output_location": "",
         "output_location_type": "none",
         "mustacheAltTags": false,
-        "x": 1760,
-        "y": 340,
+        "x": 1660,
+        "y": 380,
         "wires": [
             [
-                "71605fb3.14ec7"
+                "5244d21f.e1409c"
             ]
         ]
     },
     {
-        "id": "a621bc49.870cc",
+        "id": "e625c572.9c1d08",
         "type": "api-current-state",
         "z": "d342a46b.72a638",
         "name": "Check",
@@ -233,24 +233,24 @@
         "halt_if_type": "str",
         "halt_if_compare": "is",
         "override_topic": false,
-        "entity_id": "input_boolean.timer_lights",
+        "entity_id": "input_boolean.timer_lampadas",
         "state_type": "str",
         "state_location": "payload",
         "override_payload": "msg",
         "entity_location": "data",
         "override_data": "msg",
         "blockInputOverrides": true,
-        "x": 1610,
-        "y": 340,
+        "x": 1510,
+        "y": 380,
         "wires": [
             [
-                "f3d735df.28d318"
+                "d2019b8.a92cf68"
             ],
             []
         ]
     },
     {
-        "id": "99450799.ce04a8",
+        "id": "3d6d49ad.945456",
         "type": "api-call-service",
         "z": "d342a46b.72a638",
         "name": "turn_on Boolean",
@@ -259,23 +259,23 @@
         "debugenabled": false,
         "service_domain": "input_boolean",
         "service": "turn_on",
-        "entityId": "input_boolean.timer_lights",
+        "entityId": "input_boolean.timer_lampadas",
         "data": "",
         "dataType": "json",
         "mergecontext": "",
         "output_location": "",
         "output_location_type": "none",
         "mustacheAltTags": false,
-        "x": 1100,
-        "y": 340,
+        "x": 1020,
+        "y": 380,
         "wires": [
             [
-                "84fb27ae.188f18"
+                "b33aa916.391678"
             ]
         ]
     },
     {
-        "id": "22daa63c.592a4a",
+        "id": "14a04f31.18e7c1",
         "type": "delay",
         "z": "d342a46b.72a638",
         "name": "500ms",
@@ -289,198 +289,198 @@
         "randomLast": "5",
         "randomUnits": "seconds",
         "drop": true,
-        "x": 950,
-        "y": 340,
+        "x": 870,
+        "y": 380,
         "wires": [
             [
-                "99450799.ce04a8"
+                "3d6d49ad.945456"
             ]
         ]
     },
     {
-        "id": "11a61755.623049",
+        "id": "4ad42e2c.f3091",
         "type": "comment",
         "z": "d342a46b.72a638",
-        "name": "Read 1",
-        "info": "### Here Node-RED activates the flow if the input_boolean.timer_start is activated.",
-        "x": 150,
-        "y": 320,
+        "name": "Leia 1",
+        "info": "### Aqui o Node-RED ativa o fluxo se o input_boolean.timer_start for ativado.",
+        "x": 70,
+        "y": 360,
         "wires": []
     },
     {
-        "id": "2defb63d.f84e1a",
+        "id": "d3f88d76.9eb97",
         "type": "comment",
         "z": "d342a46b.72a638",
-        "name": "Read 2",
-        "info": "### Here we check if the device name that was selected in the input_select.timer_list is \" Lights \"\n\n### It is necessary to change the \" If State is\"and \" Name \"for the same name that was added in input_select. \n### At this point it is very important to keep the same script, respecting upper and lower case letters that were used when creating the input_select.",
-        "x": 330,
-        "y": 300,
+        "name": "Leia 2",
+        "info": "### Aqui verificamos se o nome do disposito que foi selecionado no input_select.timer_lista é \"Lampadas\" \n\n### É preciso alterar o \"If State is\" e o \"Name\" para o mesmo nome que foi acrescentado no input_select. \n### Nesse ponto é muito importante manter a mesma escrita, respeitando letras maiúsculas e minúsculas que foram usadas na hora de criar o input_select.",
+        "x": 230,
+        "y": 340,
         "wires": []
     },
     {
-        "id": "ce4dade4.39d79",
+        "id": "d90eecae.dd32c",
         "type": "comment",
         "z": "d342a46b.72a638",
-        "name": "Read 3",
-        "info": "### Code that will collect and convert the time that was chosen in the input_number.timer to program the delay automatically.",
-        "x": 490,
-        "y": 300,
+        "name": "Leia 3",
+        "info": "### Código que vai coletar e converter o tempo que foi escolhido no input_number.timer para programar o delay automaticamente.",
+        "x": 410,
+        "y": 340,
         "wires": []
     },
     {
-        "id": "745ddd30.8b1044",
+        "id": "a48af692.306b08",
         "type": "comment",
         "z": "d342a46b.72a638",
-        "name": "Read 4",
-        "info": "# DO NOT CHANGE \n ### Collect the value of input_number.timer just to configure the sensor.",
-        "x": 630,
-        "y": 300,
+        "name": "Leia 4",
+        "info": "# NÃO ALTERAR\n### Coleta o valor do input_number.timer só para configurar o sensor. ",
+        "x": 550,
+        "y": 340,
         "wires": []
     },
     {
-        "id": "82098470.b149c8",
+        "id": "13e1ff75.8c6d81",
         "type": "comment",
         "z": "d342a46b.72a638",
-        "name": "Read 5",
-        "info": "### Change the sensor name in the \" Path \"and \" Data \"fields.",
-        "x": 790,
-        "y": 300,
+        "name": "Leia 5",
+        "info": "### Altere o nome do sensor no campo \"Path\" e no campo \"Data\".",
+        "x": 710,
+        "y": 340,
         "wires": []
     },
     {
-        "id": "6d4f1936.c927a8",
+        "id": "a18285ee.50be98",
         "type": "comment",
         "z": "d342a46b.72a638",
-        "name": "Read 6",
-        "info": "### Here the input_boolean is set to \" on \"to signal that the timer is active. \n ## Change the \" Entity Id \"",
-        "x": 1070,
-        "y": 300,
+        "name": "Leia 6",
+        "info": "### Aqui o input_boolean é definido como \"on\" para sinalizar que o timer está ativo. \n## Alterar o campo \"Entity Id\"",
+        "x": 990,
+        "y": 340,
         "wires": []
     },
     {
-        "id": "a191a49e.0d0b18",
+        "id": "11d7086f.b38a38",
         "type": "comment",
         "z": "d342a46b.72a638",
-        "name": "Read 6",
-        "info": "### Here the input_boolean.timer_activate button goes back to its original state to be ready to be activated again.",
-        "x": 1250,
-        "y": 300,
+        "name": "Leia 6",
+        "info": "### Aqui o botão input_boolean.timer_ativar volta ao seu estado original para estar pronto para ser ativado novamente.",
+        "x": 1170,
+        "y": 340,
         "wires": []
     },
     {
-        "id": "6110215c.3ce54",
+        "id": "18344dbd.ee3262",
         "type": "comment",
         "z": "d342a46b.72a638",
-        "name": "Read 7",
-        "info": "### Here the delay will automatically collect the delay time defined in \" Set Delay \"- Read 3",
-        "x": 1470,
-        "y": 300,
+        "name": "Leia 7",
+        "info": "### Aqui o delay vai coletar automaticamente o tempo do delay definido no \"Set Delay\" - Leia 3",
+        "x": 1370,
+        "y": 340,
         "wires": []
     },
     {
-        "id": "a08ff2c0.7b9ec",
+        "id": "18859cdb.908993",
         "type": "comment",
         "z": "d342a46b.72a638",
-        "name": "Read 8",
-        "info": "# Change the input_boolean in \" Entity Id \"\n \n ### At this point Node-RED will check if this timer remains active before logging off. If you activate a timer and then cancel , so when you get to that point Node-RED will check and disarm the shutdown. \n \n ",
-        "x": 1610,
-        "y": 300,
+        "name": "Leia 8",
+        "info": "# Altere o input_boolean no \"Entity Id\"\n\n### Nesse ponto o Node-RED vai checar se esse timer permanece ativo antes de efetuar o desligamente. Se vc ativar um timer e depois cancelar, então quando chegar nesse ponto o Node-RED vai checar e desarmar o desligamento.\n\n",
+        "x": 1510,
+        "y": 340,
         "wires": []
     },
     {
-        "id": "281a3fd3.e2ff1",
+        "id": "3695b541.6e704a",
         "type": "comment",
         "z": "d342a46b.72a638",
-        "name": "Read 9",
-        "info": "# Change the \" Entity Id \"and place the entity that should be turned off at the end of this flow. \n \n ### Example: group.lampadas or switch.ar_condicionado \n \n",
-        "x": 1730,
-        "y": 300,
+        "name": "Leia 9",
+        "info": "# Altere o \"Entity Id\" e coloque a entidade que deve ser desligada ao final desse fluxo.\n\n### Exemplo: group.lampadas ou switch.ar_condicionado\n\n",
+        "x": 1630,
+        "y": 340,
         "wires": []
     },
     {
-        "id": "5e1901ad.baf8f",
+        "id": "a3c6c088.765a5",
         "type": "comment",
         "z": "d342a46b.72a638",
-        "name": "Read 10",
-        "info": "# Change the input_boolean in \" Entity Id \"\n \n ### Here the device's input_boolean button is set to off to signal that the timer is no longer active. \n \n",
-        "x": 1910,
-        "y": 300,
+        "name": "Leia 10",
+        "info": "# Altere o input_boolean no \"Entity Id\"\n\n### Aqui o botão input_boolean do dispositivo é definido como off para sinalziar que o timer não está mais ativo.\n\n",
+        "x": 1810,
+        "y": 340,
         "wires": []
     },
     {
-        "id": "f2d83b09.c3a488",
+        "id": "be399d5c.b76da",
         "type": "api-current-state",
         "z": "d342a46b.72a638",
-        "name": "TV",
+        "name": "TV do Quarto",
         "server": "8c51b0bb.698c3",
         "version": 1,
         "outputs": 2,
-        "halt_if": "TV",
+        "halt_if": "TV do Quarto",
         "halt_if_type": "str",
         "halt_if_compare": "is",
         "override_topic": false,
-        "entity_id": "input_select.timer_list",
+        "entity_id": "input_select.timer_lista",
         "state_type": "str",
         "state_location": "payload",
         "override_payload": "msg",
         "entity_location": "data",
         "override_data": "msg",
         "blockInputOverrides": false,
-        "x": 330,
-        "y": 380,
+        "x": 260,
+        "y": 420,
         "wires": [
             [
-                "3a58232d.f8477c"
+                "4828ed42.910a94"
             ],
             []
         ]
     },
     {
-        "id": "3a58232d.f8477c",
+        "id": "4828ed42.910a94",
         "type": "api-render-template",
         "z": "d342a46b.72a638",
         "name": "Set Delay",
         "server": "8c51b0bb.698c3",
-        "template": "{{( (states('input_number.timer_minutes') | float()) * 60000 ) | round()}}",
+        "template": "{{( (states('input_number.timer_minutos') | float()) * 60000 ) | round()}}",
         "resultsLocation": "delay",
         "resultsLocationType": "msg",
         "templateLocation": "delay",
         "templateLocationType": "msg",
-        "x": 500,
-        "y": 380,
+        "x": 420,
+        "y": 420,
         "wires": [
             [
-                "86286dbc.f6301"
+                "3c6fb418.840cbc"
             ]
         ]
     },
     {
-        "id": "50c05331.2f9e5c",
+        "id": "746f9d05.88bc64",
         "type": "api-call-service",
         "z": "d342a46b.72a638",
-        "name": "Reset Activate Input",
+        "name": "Reset Botão Ativar",
         "server": "82136dea.a6d7a",
         "version": 1,
         "debugenabled": false,
         "service_domain": "input_boolean",
         "service": "turn_off",
-        "entityId": "input_boolean.timer_activate",
+        "entityId": "input_boolean.timer_ativar",
         "data": "",
         "dataType": "json",
         "mergecontext": "",
         "output_location": "",
         "output_location_type": "none",
         "mustacheAltTags": false,
-        "x": 1300,
-        "y": 380,
+        "x": 1210,
+        "y": 420,
         "wires": [
             [
-                "6a39c7ca.256e08"
+                "fbc42508.9b8028"
             ]
         ]
     },
     {
-        "id": "8d63ec5.9420c1",
+        "id": "43e00d00.0ae4f4",
         "type": "ha-api",
         "z": "d342a46b.72a638",
         "name": "Set Sensor",
@@ -488,41 +488,41 @@
         "debugenabled": false,
         "protocol": "http",
         "method": "post",
-        "path": "/api/states/sensor.timer_tv",
-        "data": "{\"entityid\":\"sensor.timer_tv\",\"state\":0,\"attributes\":{\"timer\":\"{{payload}}\"}}",
+        "path": "/api/states/sensor.timer_tv_quarto",
+        "data": "{\"entityid\":\"sensor.timer_tv_quarto\",\"state\":0,\"attributes\":{\"timer\":\"{{payload}}\"}}",
         "dataType": "json",
         "location": "payload",
         "locationType": "msg",
         "responseType": "json",
-        "x": 810,
-        "y": 380,
+        "x": 730,
+        "y": 420,
         "wires": [
             [
-                "ee243fab.8e967"
+                "c0a6d1ca.a77b7"
             ]
         ]
     },
     {
-        "id": "86286dbc.f6301",
+        "id": "3c6fb418.840cbc",
         "type": "api-render-template",
         "z": "d342a46b.72a638",
         "name": "get var Timer",
         "server": "8c51b0bb.698c3",
-        "template": "{{ states('input_number.timer_minutes') }}",
+        "template": "{{ states('input_number.timer_minutos') }}",
         "resultsLocation": "payload",
         "resultsLocationType": "msg",
         "templateLocation": "payload",
         "templateLocationType": "msg",
-        "x": 650,
-        "y": 380,
+        "x": 570,
+        "y": 420,
         "wires": [
             [
-                "8d63ec5.9420c1"
+                "43e00d00.0ae4f4"
             ]
         ]
     },
     {
-        "id": "6a39c7ca.256e08",
+        "id": "fbc42508.9b8028",
         "type": "delay",
         "z": "d342a46b.72a638",
         "name": "",
@@ -536,16 +536,16 @@
         "randomLast": "5",
         "randomUnits": "seconds",
         "drop": true,
-        "x": 1480,
-        "y": 380,
+        "x": 1380,
+        "y": 420,
         "wires": [
             [
-                "20296dc9.aabf72"
+                "5712be6c.130ff"
             ]
         ]
     },
     {
-        "id": "867a02d5.51436",
+        "id": "6f23d751.a12768",
         "type": "api-call-service",
         "z": "d342a46b.72a638",
         "name": "turn_off Boolean",
@@ -554,21 +554,21 @@
         "debugenabled": false,
         "service_domain": "input_boolean",
         "service": "turn_off",
-        "entityId": "input_boolean.timer_tv",
+        "entityId": "input_boolean.timer_tv_quarto",
         "data": "",
         "dataType": "json",
         "mergecontext": "",
         "output_location": "",
         "output_location_type": "none",
         "mustacheAltTags": false,
-        "x": 1950,
-        "y": 380,
+        "x": 1850,
+        "y": 420,
         "wires": [
             []
         ]
     },
     {
-        "id": "4236795d.a95e08",
+        "id": "d844933.ba5db7",
         "type": "api-call-service",
         "z": "d342a46b.72a638",
         "name": "turn_off Device",
@@ -577,23 +577,23 @@
         "debugenabled": false,
         "service_domain": "homeassistant",
         "service": "turn_off",
-        "entityId": "switch.tv",
+        "entityId": "switch.tv_quarto",
         "data": "",
         "dataType": "json",
         "mergecontext": "",
         "output_location": "",
         "output_location_type": "none",
         "mustacheAltTags": false,
-        "x": 1760,
-        "y": 380,
+        "x": 1660,
+        "y": 420,
         "wires": [
             [
-                "867a02d5.51436"
+                "6f23d751.a12768"
             ]
         ]
     },
     {
-        "id": "20296dc9.aabf72",
+        "id": "5712be6c.130ff",
         "type": "api-current-state",
         "z": "d342a46b.72a638",
         "name": "Check",
@@ -604,24 +604,24 @@
         "halt_if_type": "str",
         "halt_if_compare": "is",
         "override_topic": false,
-        "entity_id": "input_boolean.timer_tv",
+        "entity_id": "input_boolean.timer_tv_quarto",
         "state_type": "str",
         "state_location": "payload",
         "override_payload": "msg",
         "entity_location": "data",
         "override_data": "msg",
         "blockInputOverrides": true,
-        "x": 1610,
-        "y": 380,
+        "x": 1510,
+        "y": 420,
         "wires": [
             [
-                "4236795d.a95e08"
+                "d844933.ba5db7"
             ],
             []
         ]
     },
     {
-        "id": "1bb312f4.3cbbad",
+        "id": "72806c50.baec34",
         "type": "api-call-service",
         "z": "d342a46b.72a638",
         "name": "turn_on Boolean",
@@ -630,23 +630,23 @@
         "debugenabled": false,
         "service_domain": "input_boolean",
         "service": "turn_on",
-        "entityId": "input_boolean.timer_tv",
+        "entityId": "input_boolean.timer_tv_quarto",
         "data": "",
         "dataType": "json",
         "mergecontext": "",
         "output_location": "",
         "output_location_type": "none",
         "mustacheAltTags": false,
-        "x": 1100,
-        "y": 380,
+        "x": 1020,
+        "y": 420,
         "wires": [
             [
-                "50c05331.2f9e5c"
+                "746f9d05.88bc64"
             ]
         ]
     },
     {
-        "id": "ee243fab.8e967",
+        "id": "c0a6d1ca.a77b7",
         "type": "delay",
         "z": "d342a46b.72a638",
         "name": "500ms",
@@ -660,11 +660,11 @@
         "randomLast": "5",
         "randomUnits": "seconds",
         "drop": true,
-        "x": 950,
-        "y": 380,
+        "x": 870,
+        "y": 420,
         "wires": [
             [
-                "1bb312f4.3cbbad"
+                "72806c50.baec34"
             ]
         ]
     },
