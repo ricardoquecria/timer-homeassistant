@@ -392,7 +392,7 @@
         "type": "comment",
         "z": "d342a46b.72a638",
         "name": "Read 9",
-        "info": "# Change the \" Entity Id \"and place the entity that should be turned off at the end of this flow. \n \n ### Example: group.lampadas or switch.ar_condicionado \n \n",
+        "info": "# Change the \" Entity Id \"and place the entity that should be turned off at the end of this flow. \n \n ### Example: group.lights or switch.ac \n \n",
         "x": 1730,
         "y": 300,
         "wires": []
