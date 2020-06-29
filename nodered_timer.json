@@ -17,7 +17,7 @@
                 "value": ""
             }
         ],
-        "entityidfilter": "input_boolean.timer_start",
+        "entityidfilter": "input_boolean.timer_activate",
         "entityidfiltertype": "exact",
         "outputinitially": false,
         "state_type": "str",
@@ -302,7 +302,7 @@
         "type": "comment",
         "z": "d342a46b.72a638",
         "name": "Read 1",
-        "info": "### Here Node-RED activates the flow if the input_boolean.timer_start is activated.",
+        "info": "### Here Node-RED activates the flow if the input_boolean.timer_activate is activated.",
         "x": 150,
         "y": 320,
         "wires": []

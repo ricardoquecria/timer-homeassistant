@@ -17,7 +17,7 @@
                 "value": ""
             }
         ],
-        "entityidfilter": "input_boolean.timer_start",
+        "entityidfilter": "input_boolean.timer_ativar",
         "entityidfiltertype": "exact",
         "outputinitially": false,
         "state_type": "str",
@@ -302,7 +302,7 @@
         "type": "comment",
         "z": "d342a46b.72a638",
         "name": "Leia 1",
-        "info": "### Aqui o Node-RED ativa o fluxo se o input_boolean.timer_start for ativado.",
+        "info": "### Aqui o Node-RED ativa o fluxo se o input_boolean.timer_ativar for ativado.",
         "x": 70,
         "y": 360,
         "wires": []
