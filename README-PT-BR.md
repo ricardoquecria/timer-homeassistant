@@ -157,7 +157,7 @@ Resultado:
 ## 7ª Etapa - Node-RED
 O fluxo do Node-RED deve ser importado e depois editado de acordo com sua necessidade.<br>
 Para fazer a importação você pode baixar o arquivo .json ou copiar o código e colar na janela de importação do Node-RED.<br>
-[Clique aqui para copiar ou fazer download do código dos fluxos do Node-RED](https://github.com/orickcorreia/timer-homeassistant/blob/master/nodered_timer.json)
+[Clique aqui para copiar ou fazer download do código dos fluxos do Node-RED](https://github.com/orickcorreia/timer-homeassistant/blob/master/nodered_timer_pt_br.json)
 
 ## 8ª Etapa - Aplicando na interface (Lovelace)
 
