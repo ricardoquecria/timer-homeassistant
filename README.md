@@ -1,5 +1,5 @@
 # Timer for Home Assistant with Node-RED
-[Versão PT-BR](https://github.com/orickcorreia/timer-homeassistant/blob/master/README-PT-BR.md)
+[Versão PT-BR](https://github.com/orickcorreia/timer-homeassistant/blob/master/README-PT-BR.md)<br>
 ![](timer.gif)
 
 
