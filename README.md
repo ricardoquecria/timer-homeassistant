@@ -126,7 +126,7 @@ sensor:
             {{state_attr ('sensor.timer_tv', 'timer')}}
 
       timer_lights:
-        friendly_name: 'Timer - Lamps'
+        friendly_name: 'Timer - Lights'
         unit_of_measurement: min
         value_template: "{% if (states.sensor.time.state) | float == 0%}
         {{(((((state_attr ('sensor.timer_lights',' timer ')' float ()) * 60) - (as_timestamp (now ()) - as_timestamp (states.input_boolean.timer_lights.last_changed))) / 60) | round (0)}}
@@ -157,7 +157,7 @@ Result:
 ## 7ª Stage - Node-RED
 The Node-RED stream must be imported and then edited according to your needs. <br>
 To import, you can download the .json file or copy the code and paste it into the Node-RED import window. <br>
-[Click here to copy or download the code for Node-RED flows] (https://github.com/orickcorreia/timer-homeassistant/blob/master/nodered_timer.json)
+[Click here to copy or download the code for Node-RED flows](https://github.com/orickcorreia/timer-homeassistant/blob/master/nodered_timer_pt_br.json)
 
 ## 8th Step - Applying to the interface (Lovelace)
 
@@ -282,7 +282,7 @@ In Node-RED you will find a programming flow for each device. These strings are 
 
 * <b> 1º Start Timer -> </b> Detects when the timer is activated, checking if intut_boolean.timer_activate is in "on" status and triggers the flow for all sequences;
 
-* <b> 2º Lights -> </b> Each sequence starts with a node that checks if the Name selected in the input_select.timer_list is the same as the flow in question. If it is "Lights", for example, then Node-RED will follow the flow programmed with the entities related to the lamps: sensor.timer_lights and input_boolean.timer_lights;
+* <b> 2º Lights -> </b> Each sequence starts with a node that checks if the Name selected in the input_select.timer_list is the same as the flow in question. If it is "Lights", for example, then Node-RED will follow the flow programmed with the entities related to the lights: sensor.timer_lights and input_boolean.timer_lights;
 
 * <b> 3rd Set Delay -> </b> Extracts the value of the input_number.timer_minutes and converts it to milliseconds to be used to define the delay time later on;
 
