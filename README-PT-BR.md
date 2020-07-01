@@ -209,7 +209,7 @@ Para fazer a importação você pode baixar o arquivo .json ou copiar o código 
         name: Dispositivo
       - entity: input_number.timer_minutos
         name: Tempo
-      - entity: input_boolean.timer
+      - entity: input_boolean.timer_ativar
         name: Ativar
         
   #Condicional para exibir apenas quando o timer estiver ativo as Lampadas
