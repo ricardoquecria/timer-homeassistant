@@ -23,7 +23,9 @@
 
 ## 1ª Etapa - Input Boolean:
 
-Começamos com o input que será usado para ativar a sequencia da programação do timer; 
+Começamos com o input que será usado para ativar a sequencia da programação do timer;<br>
+Os inputs booleans são botões de ON e OFF (True/False) que podem ser controlados.<br>
+Se você nunca usou inputs boolean, [saiba mais clicando aqui](https://www.home-assistant.io/integrations/input_boolean)
 ```
 input_boolean:
 
@@ -60,6 +62,8 @@ Resultado:
 
 ## 2ª Etapa - Input Number:
 Vamos criar um input_number que será usado para definir os minutos do timer.<br>
+O input number é uma entidade para que você possa definir valores em números na interface.<br>
+Se você nunca usou input number, [saiba mais clicando aqui](https://www.home-assistant.io/integrations/input_number)<br><br>
 Você pode escolher um input com slider (como no gif).
 ```
 input_number:
@@ -92,7 +96,8 @@ Resultado:
 ## 3ª Etapa - Input Select:
 
 O input_select será usado para criar a lista de seleção com os dispositivos na interface do timer.<br>
-Acrescente as oções de acordo com sua necessidade.<br>
+Se você nunca usou input select, [saiba mais clicando aqui](https://www.home-assistant.io/integrations/input_select)<br><br>
+Acrescente as oções na lista de acordo com sua necessidade.<br>
 ATENÇÃO! Só acrescente opcões que tiverem input_booleans criados.
 ```
 input_select:
@@ -110,7 +115,11 @@ Resultado:
 ## 4ª Etapa - Sensor template
 
 Vamos criar sensores com templates para calcular e exibir o tempo que ainda falta para o dispositivo ser desligado.<br>
-ATENÇÃO! Se ao criar mais sensores para os seus dispositivos, altere também o template do calculo. Por isso que é importante manter um padrão "timer_nome_do_dispositivo". Observe que o "value_template" faz referência ao próprio sensor e ao input_boolean do dispositivo em questão. Compare os dois exemplos abaixo.
+O sensor template é uma entidade que consegue obter seus valores de outras entidades, usando templates e formulas matemáticas.<br>
+Se você nunca usou o sensor template, [saiba mais clicando aqui](https://www.home-assistant.io/integrations/template)<br><br>
+
+ATENÇÃO! Se ao criar mais sensores para os seus dispositivos, altere também o template do calculo. Por isso que é importante manter um padrão "timer_nome_do_dispositivo". Observe que o "value_template" faz referência ao próprio sensor e ao input_boolean do dispositivo em questão. Compare os dois exemplos abaixo.<br>
+
 ```
 sensor:
   - platform: template
@@ -144,6 +153,7 @@ Resultado:
 ## 5ª Etapa - Sensor time_date
 
 Este é um sensor que gera o horário atual. Ele é usado na programação do sensores acima para forçar a atualização da contagem regressiva.
+Se você nunca usou o sensor time date, [saiba mais clicando aqui](https://www.home-assistant.io/integrations/time_date/)
 ```
 sensor:
   - platform: time_date
@@ -161,6 +171,7 @@ Para fazer a importação você pode baixar o arquivo .json ou copiar o código 
 [Clique aqui para copiar ou fazer download do código dos fluxos do Node-RED](https://github.com/orickcorreia/timer-homeassistant/blob/master/nodered_timer_pt_br.json)
 
 ## 8ª Etapa - Aplicando na interface (Lovelace)
+[saiba mais sobre como aplicar na interface lovelace clicando aqui](https://www.home-assistant.io/lovelace)
 
 ```
 - type: vertical-stack
